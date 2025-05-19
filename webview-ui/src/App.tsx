@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import LoadingSpiner from "./components/loading-spinner";
 import { vscode } from "./vscode";
 
 export interface Route {
@@ -37,7 +38,7 @@ function App() {
     };
   }, []);
   return (
-    <div className="py-5">
+    <div className="py-5 flex justify-center items-center w-full">
       {data ? (
         <div>
           <div className="mb-3">
@@ -85,7 +86,9 @@ function App() {
             </table>
           </div>
         </div>
-      ) : null}
+      ) : (
+        <LoadingSpiner />
+      )}
     </div>
   );
 }

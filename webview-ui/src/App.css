@@ -5,3 +5,7 @@ body {
 }
 
 @custom-variant dark (&:where(.vscode-dark, .vscode-dark *));
+
+#root {
+  @apply w-full;
+}
