@@ -23,6 +23,7 @@
   ],
   "activationEvents": [],
   "main": "./dist/extension.js",
+  "icon": "./src/assets/laravel-route-preview-icon.png",
   "contributes": {
     "commands": [
       {
