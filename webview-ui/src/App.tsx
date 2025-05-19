@@ -38,9 +38,9 @@ function App() {
     };
   }, []);
   return (
-    <div className="py-5 flex justify-center items-center w-full">
+    <div className="py-5 flex justify-center  w-full min-h-screen">
       {data ? (
-        <div>
+        <div className="w-full">
           <div className="mb-3">
             <h2 className="text-2xl">Laravel Route List</h2>
           </div>
@@ -62,7 +62,7 @@ function App() {
                     key={item.action}
                     className="text-gray-900 dark:text-gray-200 first:font-medium"
                   >
-                    <td className="px-3 py-2 whitespace-nowrap">
+                    <td className="px-3 py-2 max-w-[150px] break-words whitespace-normal">
                       {item.method}
                     </td>
                     <td className="px-3 py-2 whitespace-nowrap">
