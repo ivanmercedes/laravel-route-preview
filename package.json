@@ -9,6 +9,18 @@
   "categories": [
     "Other"
   ],
+  "keywords": [
+    "laravel",
+    "php",
+    "routes",
+    "route list",
+    "preview",
+    "artisan",
+    "framework",
+    "web",
+    "mvc",
+    "developer tool"
+  ],
   "activationEvents": [],
   "main": "./dist/extension.js",
   "contributes": {
