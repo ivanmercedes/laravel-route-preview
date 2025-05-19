@@ -4,7 +4,7 @@ Easily preview your Laravel routes directly from Visual Studio Code in a beautif
 
 
 
-![Laravel Route Preview Screenshot](/src/assets/preview.png) 
+![Laravel Route Preview Screenshot](/assets/preview.png) 
 
 ---
 
