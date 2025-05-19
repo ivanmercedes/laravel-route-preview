@@ -1,3 +1,7 @@
+@import "tailwindcss";
+
 body {
   background-color: var(--vscode-editor-background);
 }
+
+@custom-variant dark (&:where(.vscode-dark, .vscode-dark *));
