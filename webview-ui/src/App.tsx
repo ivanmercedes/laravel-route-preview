@@ -37,6 +37,27 @@ function App() {
       window.removeEventListener("message", handleMessage);
     };
   }, []);
+
+  function methodColor(method: string) {
+    switch (method.toUpperCase()) {
+      case "GET|HEAD":
+      case "GET":
+        return " text-green-500";
+      case "POST":
+        return " text-blue-500";
+      case "PUT":
+      case "PATCH":
+        return "text-yellow-500";
+      case "GET|HEAD|POST|PUT|PATCH|DELETE|OPTIONS":
+      case "DELETE":
+        return "text-red-500";
+      case "OPTIONS":
+        return "text-gray-500";
+      default:
+        return "";
+    }
+  }
+
   return (
     <div className="py-5 flex justify-center  w-full min-h-screen">
       {data ? (
@@ -62,8 +83,14 @@ function App() {
                     key={item.action}
                     className="text-gray-900 dark:text-gray-200 first:font-medium"
                   >
-                    <td className="px-3 py-2 max-w-[150px] break-words whitespace-normal">
-                      {item.method}
+                    <td
+                      className={`px-3 py-2 max-w-[150px] break-words whitespace-normal ${methodColor(
+                        item.method
+                      )}`}
+                    >
+                      {item.method === "GET|HEAD|POST|PUT|PATCH|DELETE|OPTIONS"
+                        ? "ANY"
+                        : item.method}
                     </td>
                     <td className="px-3 py-2 whitespace-nowrap">
                       {item.name ?? "N.A"}
