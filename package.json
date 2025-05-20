@@ -43,6 +43,11 @@
           "type": "boolean",
           "default": false,
           "description": "Enables live reloading of the webview UI from the Vite development server. Requires 'npm run start:webview' (or equivalent Vite dev command) to be running in the 'webview-ui' directory."
+        },
+        "laravelRoutePreview.webviewDevPort": {
+          "type": "integer",
+          "default": 5173,
+          "description": "The port number used by the Vite development server for the webview UI. Ensure this matches the port Vite is running on (check 'npm run dev' output in 'webview-ui')."
         }
       }
     }

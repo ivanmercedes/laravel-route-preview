@@ -7,6 +7,7 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     cors: true,
+    port: Number(process.env.PORT) || 5173,
   },
   build: {
     outDir: "build",

@@ -3,8 +3,6 @@ import * as vscode from 'vscode';
 import { Disposable, Uri, ViewColumn, Webview, WebviewPanel, window } from "vscode";
 import { getNonce, getUri } from "../utilities";
 
-const VITE_DEV_SERVER_URL = "http://localhost:5173";
-
 /**
  * This class manages the state and behavior of HelloWorld webview panels.
  *
@@ -57,7 +55,9 @@ export class LaravelRoutePreviewPanel {
             const isDev = vscode.workspace.getConfiguration('laravelRoutePreview').get('debugWebview', false);
             let localResourceRoots = [Uri.joinPath(extensionUri, "out"), Uri.joinPath(extensionUri, "webview-ui/build")];
             if (isDev) {
-                localResourceRoots.push(Uri.parse(VITE_DEV_SERVER_URL));
+                const devPort = vscode.workspace.getConfiguration('laravelRoutePreview').get('webviewDevPort', 5173);
+                const viteDevServerUri = Uri.parse(`http://localhost:${devPort}`);
+                localResourceRoots.push(viteDevServerUri);
             }
 
             // If a webview panel does not already exist create and show a new one
@@ -115,13 +115,16 @@ export class LaravelRoutePreviewPanel {
 
         let scriptUri;
         let stylesUri;
-        let cspSourceOverrides = '';
+        // let cspSourceOverrides = ''; // No longer needed
+
+        let viteServerHttpUrl = '';
+        let viteServerWsUrl = '';
 
         if (isDev) {
-            scriptUri = `${VITE_DEV_SERVER_URL}/src/main.tsx`;
-            // In dev mode with Vite, styles are often injected by JS, or linked dynamically.
-            // We also need to allow Vite's server for styles and scripts in CSP.
-            cspSourceOverrides = `${VITE_DEV_SERVER_URL}`;
+            const devPort = vscode.workspace.getConfiguration('laravelRoutePreview').get('webviewDevPort', 5173);
+            viteServerHttpUrl = `http://localhost:${devPort}`;
+            viteServerWsUrl = `ws://localhost:${devPort}`;
+            scriptUri = `${viteServerHttpUrl}/src/main.tsx`;
         } else {
             stylesUri = getUri(webview, extensionUri, ["webview-ui", "build", "assets", "index.css"]);
             scriptUri = getUri(webview, extensionUri, ["webview-ui", "build", "assets", "index.js"]);
@@ -130,7 +133,9 @@ export class LaravelRoutePreviewPanel {
         // Tip: Install the es6-string-html VS Code extension to enable code highlighting below
         let csp = `default-src 'none'; script-src 'nonce-${nonce}'`;
         if (isDev) {
-            csp += ` ${VITE_DEV_SERVER_URL}; style-src ${webview.cspSource} ${VITE_DEV_SERVER_URL} 'unsafe-inline';`;
+            // Ensure viteServerHttpUrl and viteServerWsUrl are defined if isDev is true.
+            // They are set inside the above if(isDev) block.
+            csp += ` ${viteServerHttpUrl}; style-src ${webview.cspSource} ${viteServerHttpUrl} 'unsafe-inline'; connect-src ${viteServerHttpUrl} ${viteServerWsUrl};`;
         } else {
             csp += `; style-src ${webview.cspSource};`;
         }

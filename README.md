@@ -54,13 +54,21 @@ Pull requests and feature suggestions are welcome! 🎉
 
 ## Developing the Webview UI
 
-To enable live reloading for the webview UI during development, set the `Laravel Route Preview: Debug Webview` (or `laravelRoutePreview.debugWebview`) setting to `true` in your VS Code settings.
+To enable live reloading for the webview UI during development:
 
-Navigate to the `webview-ui` directory in your terminal and run `npm run dev` to start the Vite development server.
-```bash
-cd webview-ui
-npm run dev
-```
-This will allow you to see changes to the UI in real-time as you edit the files in `webview-ui/src`.
+1.  **Enable Debug Mode**: Set the `Laravel Route Preview: Debug Webview` (or `laravelRoutePreview.debugWebview`) setting to `true` in your VS Code settings.
+2.  **Configure the Port (Optional but Recommended)**:
+    *   You can specify the port for the Vite development server using the `Laravel Route Preview: Webview Dev Port` (or `laravelRoutePreview.webviewDevPort`) setting in VS Code. This defaults to `5173`.
+    *   **It is crucial that the port configured in VS Code settings matches the actual port the Vite development server is running on.**
+3.  **Start the Vite Dev Server**: Navigate to the `webview-ui` directory in your terminal and run `npm run dev`.
+    ```bash
+    cd webview-ui
+    npm run dev
+    ```
+    *   When you run this command, Vite will log the port it's using to the console (e.g., `  ➜  Local:   http://localhost:5173/`).
+    *   Vite typically uses port 5173 by default. If this port is busy, it will automatically pick the next available port (e.g., 5174).
+    *   You can also set the `PORT` environment variable when running the dev server (e.g., `PORT=5174 npm run dev`) to specify a port. Ensure this matches your `laravelRoutePreview.webviewDevPort` setting in VS Code.
 
-Remember to set `laravelRoutePreview.debugWebview` back to `false` when you are done with UI development to use the production build of the webview.
+This setup will allow you to see changes to the UI in real-time as you edit the files in `webview-ui/src`, as the webview in VS Code will connect to this development server.
+
+**Important**: Remember to set `laravelRoutePreview.debugWebview` back to `false` when you are done with UI development to use the production build of the webview.
