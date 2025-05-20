@@ -49,3 +49,18 @@ MIT License © Ivan Mercedes
 ## 🙌 Contributions
 
 Pull requests and feature suggestions are welcome! 🎉
+
+---
+
+## Developing the Webview UI
+
+To enable live reloading for the webview UI during development, set the `Laravel Route Preview: Debug Webview` (or `laravelRoutePreview.debugWebview`) setting to `true` in your VS Code settings.
+
+Navigate to the `webview-ui` directory in your terminal and run `npm run dev` to start the Vite development server.
+```bash
+cd webview-ui
+npm run dev
+```
+This will allow you to see changes to the UI in real-time as you edit the files in `webview-ui/src`.
+
+Remember to set `laravelRoutePreview.debugWebview` back to `false` when you are done with UI development to use the production build of the webview.

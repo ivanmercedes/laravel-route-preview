@@ -35,7 +35,17 @@
         "command": "laravelRoutePreview.showRoutes",
         "title": "Laravel: Preview Routes"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Laravel Route Preview",
+      "properties": {
+        "laravelRoutePreview.debugWebview": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enables live reloading of the webview UI from the Vite development server. Requires 'npm run start:webview' (or equivalent Vite dev command) to be running in the 'webview-ui' directory."
+        }
+      }
+    }
   },
   "scripts": {
     "install:all": "npm install && cd webview-ui && npm install",
