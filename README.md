@@ -11,7 +11,8 @@ Easily preview your Laravel routes directly from Visual Studio Code in a beautif
 ## ✨ Features
 
 - 📋 List all Laravel routes with method, name,  URI, controller, action, and middleware.
-
+- 🔍 Search routes by name, URI, or action.
+- 📊 Filter routes by specific HTTP methods (e.g., GET, POST). Your filter preferences are saved and remembered.
 - ⚡ Runs `php artisan route:list --json` in the background.
 - 🧠 WebView interface – clean, responsive and fast.
 

@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import LoadingSpiner from "./components/loading-spinner";
+import MethodFilter from "./components/MethodFilter";
 import { vscode } from "./vscode";
+
+const LOCAL_STORAGE_KEY_METHOD_FILTERS = "laravelRoutePreview.selectedMethods";
 
 export interface Route {
   name: string | null;
@@ -13,6 +16,16 @@ export interface Route {
 
 function App() {
   const [data, setData] = useState<Route[] | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [selectedMethods, setSelectedMethods] = useState<string[]>([]); // State for selected methods
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleMethodFilterChange = (methods: string[]) => {
+    setSelectedMethods(methods);
+  };
 
   function refreshRoutes() {
     vscode.postMessage({
@@ -23,11 +36,30 @@ function App() {
   useEffect(() => {
     refreshRoutes();
 
+    const savedFilters = localStorage.getItem(LOCAL_STORAGE_KEY_METHOD_FILTERS);
+    if (savedFilters) {
+      try {
+        const parsedFilters = JSON.parse(savedFilters);
+        if (
+          Array.isArray(parsedFilters) &&
+          parsedFilters.every((item) => typeof item === "string")
+        ) {
+          setSelectedMethods(parsedFilters);
+        }
+      } catch (error) {
+        console.error(
+          "Error parsing saved method filters from localStorage:",
+          error
+        );
+        localStorage.removeItem(LOCAL_STORAGE_KEY_METHOD_FILTERS);
+      }
+    }
+
     const handleMessage = (event: MessageEvent) => {
       const message = event.data;
+
       if (message?.type === "getRoutes") {
-        setData(JSON.parse(message.data));
-        console.log("data", JSON.parse(message.data));
+        setData(message.data);
       }
     };
 
@@ -37,6 +69,13 @@ function App() {
       window.removeEventListener("message", handleMessage);
     };
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem(
+      LOCAL_STORAGE_KEY_METHOD_FILTERS,
+      JSON.stringify(selectedMethods)
+    );
+  }, [selectedMethods]);
 
   function methodColor(method: string) {
     switch (method.toUpperCase()) {
@@ -58,13 +97,50 @@ function App() {
     }
   }
 
+  const filteredForRender = data
+    ? data.filter((route) => {
+        const term = searchTerm.toLowerCase();
+        const searchMatch =
+          route.name?.toLowerCase().includes(term) ||
+          route.uri.toLowerCase().includes(term) ||
+          route.action.toLowerCase().includes(term);
+        if (!searchMatch) return false;
+
+        if (selectedMethods.length === 0) {
+          return true;
+        }
+        const routeMethods = route.method.toUpperCase().split("|");
+        return routeMethods.some((rm) => selectedMethods.includes(rm));
+      })
+    : [];
+
+  console.log("[App.tsx data length:", filteredForRender.length);
+
   return (
     <div className="py-5 flex justify-center  w-full min-h-screen">
       {data ? (
         <div className="w-full">
-          <div className="mb-3">
-            <h2 className="text-2xl">Laravel Route List</h2>
+          <div className="mb-4 p-4 border rounded dark:border-gray-700">
+            <div className="mb-2">
+              <input
+                type="text"
+                placeholder="Search routes (name, uri, action)..."
+                value={searchTerm}
+                onChange={handleSearchChange}
+                className="w-full p-2 border rounded dark:bg-gray-800 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none"
+              />
+            </div>
+            <div className="mt-4">
+              <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+                Filter by HTTP Method:
+              </label>
+              <MethodFilter
+                selectedMethods={selectedMethods}
+                onFilterChange={handleMethodFilterChange}
+              />
+            </div>
           </div>
+
           <div className="overflow-x-auto">
             <table className="min-w-full w-full  divide-y-2 divide-gray-200 dark:divide-gray-600">
               <thead className="ltr:text-left rtl:text-right">
@@ -78,9 +154,9 @@ function App() {
               </thead>
 
               <tbody className="divide-y divide-gray-200 dark:divide-gray-600">
-                {data?.map((item: Route) => (
+                {filteredForRender.map((item: Route) => (
                   <tr
-                    key={item.action}
+                    key={`${item.method}-${item.uri}-${item.action}`}
                     className="text-gray-900 dark:text-gray-200 first:font-medium"
                   >
                     <td

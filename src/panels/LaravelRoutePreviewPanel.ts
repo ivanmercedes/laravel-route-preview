@@ -157,7 +157,7 @@ export class LaravelRoutePreviewPanel {
                             let routes;
                             try {
                                 routes = JSON.parse(stdout);
-                                webview.postMessage({ type: 'getRoutes', data: stdout });
+                                webview.postMessage({ type: 'getRoutes', data: routes });
                             } catch (e) {
                                 vscode.window.showErrorMessage('Failed to parse route:list output.');
                                 return;

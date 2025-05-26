@@ -2,7 +2,7 @@
   "name": "laravel-route-preview",
   "displayName": "Laravel Route Preview",
   "description": "Preview Laravel routes in a table format from VSCode.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "IvanMercedes",
   "engines": {
     "vscode": "^1.100.0"

@@ -9,3 +9,13 @@ body {
 #root {
   @apply w-full;
 }
+
+.btn-method {
+  @apply px-3 py-1 border rounded-md text-sm font-medium;
+}
+.btn-method-active {
+  @apply bg-blue-500 text-white border-blue-500;
+}
+.btn-method-inactive {
+  @apply bg-gray-100 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-600;
+}
