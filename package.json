@@ -1,8 +1,8 @@
 {
   "name": "laravel-route-preview",
   "displayName": "Laravel Route Preview",
-  "description": "Preview Laravel routes in a beautiful, modern interface with search, filters, and statistics.",
-  "version": "0.0.3",
+  "description": "Preview Laravel routes with modern UI, grouping, export, and controller navigation.",
+  "version": "1.0.0",
   "publisher": "IvanMercedes",
   "engines": {
     "vscode": "^1.100.0"

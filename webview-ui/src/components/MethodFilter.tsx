@@ -27,16 +27,17 @@ const MethodFilter: React.FC<MethodFilterProps> = ({
   };
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 mt-8">
       <div className="flex flex-wrap gap-2">
         {AVAILABLE_METHODS.map((method) => (
           <button
             key={method}
             onClick={() => handleMethodToggle(method)}
-            className={`btn-method ${selectedMethods.includes(method)
+            className={`btn-method ${
+              selectedMethods.includes(method)
                 ? "btn-method-active"
                 : "btn-method-inactive"
-              }`}
+            }`}
             aria-pressed={selectedMethods.includes(method)}
             aria-label={`Filter by ${method} method`}
           >

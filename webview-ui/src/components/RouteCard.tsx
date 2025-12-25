@@ -1,6 +1,8 @@
 import { useState } from "react";
 import type { Route } from "../App";
 import CopyButton from "./CopyButton";
+import { isClickable, parseControllerAction } from "../utils/controllerUtils";
+import { vscode } from "../vscode";
 
 interface RouteCardProps {
     route: Route;
@@ -35,6 +37,18 @@ const RouteCard: React.FC<RouteCardProps> = ({ route }) => {
             ? "ANY"
             : route.method;
 
+    const handleControllerClick = () => {
+        if (isClickable(route.action)) {
+            vscode.postMessage({
+                command: "openController",
+                action: route.action,
+            });
+        }
+    };
+
+    const actionIsClickable = isClickable(route.action);
+    const parsedAction = actionIsClickable ? parseControllerAction(route.action) : null;
+
     return (
         <div className="route-card">
             <div className="route-card-header">
@@ -57,7 +71,30 @@ const RouteCard: React.FC<RouteCardProps> = ({ route }) => {
             <div className="route-card-body">
                 <div className="route-action-container">
                     <span className="text-gray-500 dark:text-gray-400 text-sm">Action:</span>
-                    <code className="route-action">{route.action}</code>
+                    {actionIsClickable && parsedAction ? (
+                        <button
+                            onClick={handleControllerClick}
+                            className="route-action-clickable"
+                            title={`Click to open ${parsedAction.controller}`}
+                        >
+                            <code>{route.action}</code>
+                            <svg
+                                className="w-3 h-3 ml-1"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                                />
+                            </svg>
+                        </button>
+                    ) : (
+                        <code className="route-action">{route.action}</code>
+                    )}
                     <CopyButton text={route.action} label="Copy Action" />
                 </div>
 

@@ -164,8 +164,50 @@ export class LaravelRoutePreviewPanel {
                             }
                         });
 
-                        // Code that should run in response to the hello message command
-                        // window.showInformationMessage(text);
+                        return;
+                    case "openController":
+                        const { action } = message;
+
+                        if (!action || action === "Closure" || !action.includes("\\")) {
+                            vscode.window.showInformationMessage("This action is not a controller.");
+                            return;
+                        }
+
+                        // Parse the controller path
+                        const [fullPath] = action.split("@");
+
+                        // Convert namespace to file path
+                        // Example: App\\Http\\Controllers\\UserController -> app/Http/Controllers/UserController.php
+                        let relativePath = fullPath.replace(/\\/g, "/") + ".php";
+
+                        // Handle common Laravel namespace mappings
+                        if (relativePath.startsWith("App/")) {
+                            relativePath = relativePath.replace("App/", "app/");
+                        }
+
+                        const workspaceFolders2 = vscode.workspace.workspaceFolders;
+                        if (!workspaceFolders2) {
+                            vscode.window.showErrorMessage("No workspace open");
+                            return;
+                        }
+
+                        const workspaceRoot = workspaceFolders2[0].uri.fsPath;
+                        const filePath = vscode.Uri.file(`${workspaceRoot}/${relativePath}`);
+
+                        // Try to open the file
+                        vscode.workspace.fs.stat(filePath).then(
+                            () => {
+                                // File exists, open it
+                                vscode.window.showTextDocument(filePath);
+                            },
+                            () => {
+                                // File not found, show error
+                                vscode.window.showErrorMessage(
+                                    `Controller file not found: ${relativePath}`
+                                );
+                            }
+                        );
+
                         return;
                     // Add more switch case statements here as more webview message commands
                     // are created within the webview context (i.e. inside media/main.js)
