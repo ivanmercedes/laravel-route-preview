@@ -10,12 +10,333 @@ body {
   @apply w-full;
 }
 
+/* App Container */
+.app-container {
+  @apply w-full min-h-screen pb-8;
+}
+
+/* Header Styles */
+.app-header {
+  @apply sticky top-0 z-10 backdrop-blur-md border-b;
+  background: var(--vscode-editor-background);
+  border-color: var(--vscode-panel-border);
+}
+
+.header-content {
+  @apply p-4 space-y-4;
+}
+
+.header-title {
+  @apply flex items-center justify-between;
+}
+
+.header-title h1 {
+  @apply text-2xl font-bold;
+  color: var(--vscode-foreground);
+}
+
+.refresh-btn {
+  @apply p-2 rounded-lg transition-all duration-200 hover:scale-110;
+  background: var(--vscode-button-secondaryBackground);
+  color: var(--vscode-button-secondaryForeground);
+}
+
+.refresh-btn:hover {
+  background: var(--vscode-button-secondaryHoverBackground);
+}
+
+/* Search Styles */
+.search-container {
+  @apply w-full;
+}
+
+.search-input-wrapper {
+  @apply relative;
+}
+
+.search-icon {
+  @apply absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 pointer-events-none;
+  color: var(--vscode-input-placeholderForeground);
+}
+
+.search-input {
+  @apply w-full pl-10 pr-10 py-2.5 rounded-lg border transition-all duration-200;
+  background: var(--vscode-input-background);
+  color: var(--vscode-input-foreground);
+  border-color: var(--vscode-input-border);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--vscode-focusBorder);
+  box-shadow: 0 0 0 1px var(--vscode-focusBorder);
+}
+
+.clear-search-btn {
+  @apply absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors;
+}
+
+/* Filter Section */
+.filter-section {
+  @apply space-y-2;
+}
+
+.filter-header {
+  @apply flex items-center justify-between;
+}
+
+.filter-label {
+  @apply text-sm font-medium;
+  color: var(--vscode-foreground);
+}
+
+.clear-filters-btn {
+  @apply text-sm px-3 py-1 rounded-md transition-colors;
+  background: var(--vscode-button-secondaryBackground);
+  color: var(--vscode-button-secondaryForeground);
+}
+
+.clear-filters-btn:hover {
+  background: var(--vscode-button-secondaryHoverBackground);
+}
+
+/* Method Filter Buttons */
 .btn-method {
-  @apply px-3 py-1 border rounded-md text-sm font-medium;
+  @apply px-3 py-1.5 border rounded-lg text-sm font-medium transition-all duration-200;
 }
+
 .btn-method-active {
-  @apply bg-blue-500 text-white border-blue-500;
+  @apply border-transparent shadow-lg scale-105;
+  background: var(--vscode-button-background);
+  color: var(--vscode-button-foreground);
 }
+
 .btn-method-inactive {
-  @apply bg-gray-100 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-600;
+  @apply hover:scale-105;
+  background: var(--vscode-button-secondaryBackground);
+  color: var(--vscode-button-secondaryForeground);
+  border-color: var(--vscode-button-border);
+}
+
+.btn-method-inactive:hover {
+  background: var(--vscode-button-secondaryHoverBackground);
+}
+
+/* Stats Container */
+.stats-container {
+  @apply px-4 py-6;
+}
+
+.stats-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-4;
+}
+
+.stat-card {
+  @apply p-4 rounded-xl border backdrop-blur-sm;
+  background: var(--vscode-editor-background);
+  border-color: var(--vscode-panel-border);
+}
+
+.stat-value {
+  @apply text-4xl font-bold mb-1;
+  color: var(--vscode-foreground);
+}
+
+.stat-label {
+  @apply text-sm font-medium;
+  color: var(--vscode-descriptionForeground);
+}
+
+.method-badge {
+  @apply px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-200 cursor-pointer hover:scale-105;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.method-count {
+  @apply px-1.5 py-0.5 rounded-full text-xs;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Routes Grid */
+.routes-grid {
+  @apply px-4 grid grid-cols-1 gap-4;
+}
+
+/* Route Card */
+.route-card {
+  @apply rounded-xl border overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-[1.02];
+  background: var(--vscode-editor-background);
+  border-color: var(--vscode-panel-border);
+}
+
+.route-card-header {
+  @apply p-4 border-b;
+  border-color: var(--vscode-panel-border);
+}
+
+.route-card-body {
+  @apply p-4 space-y-3;
+}
+
+.route-name {
+  @apply text-lg font-semibold mb-2;
+  color: var(--vscode-foreground);
+}
+
+.route-uri-container {
+  @apply flex items-center gap-2;
+}
+
+.route-uri {
+  @apply text-sm px-2 py-1 rounded;
+  background: var(--vscode-textCodeBlock-background);
+  color: var(--vscode-textPreformat-foreground);
+}
+
+.route-action-container {
+  @apply flex items-center gap-2 flex-wrap;
+}
+
+.route-action {
+  @apply text-sm px-2 py-1 rounded;
+  background: var(--vscode-textCodeBlock-background);
+  color: var(--vscode-textPreformat-foreground);
+}
+
+/* Method Badges */
+.method-badge-large {
+  @apply px-3 py-1.5 rounded-lg text-sm font-bold uppercase tracking-wide;
+}
+
+.method-get {
+  @apply bg-emerald-500/20 text-emerald-500 border border-emerald-500/30;
+}
+
+.method-post {
+  @apply bg-blue-500/20 text-blue-500 border border-blue-500/30;
+}
+
+.method-put {
+  @apply bg-amber-500/20 text-amber-500 border border-amber-500/30;
+}
+
+.method-delete {
+  @apply bg-red-500/20 text-red-500 border border-red-500/30;
+}
+
+.method-options {
+  @apply bg-gray-500/20 text-gray-500 border border-gray-500/30;
+}
+
+.method-any {
+  @apply bg-purple-500/20 text-purple-500 border border-purple-500/30;
+}
+
+.method-default {
+  @apply bg-gray-500/20 text-gray-500 border border-gray-500/30;
+}
+
+/* Copy Button */
+.copy-btn {
+  @apply p-1.5 rounded-md transition-all duration-200 hover:scale-110;
+  background: var(--vscode-button-secondaryBackground);
+  color: var(--vscode-button-secondaryForeground);
+}
+
+.copy-btn:hover {
+  background: var(--vscode-button-secondaryHoverBackground);
+}
+
+/* Middleware Section */
+.middleware-section {
+  @apply space-y-2;
+}
+
+.middleware-toggle {
+  @apply flex items-center gap-2 text-sm font-medium transition-colors;
+  color: var(--vscode-foreground);
+}
+
+.middleware-toggle:hover {
+  color: var(--vscode-textLink-foreground);
+}
+
+.middleware-list {
+  @apply flex flex-wrap gap-2 mt-2 pl-6;
+}
+
+.middleware-badge {
+  @apply px-2 py-1 text-xs rounded-md border;
+  background: var(--vscode-badge-background);
+  color: var(--vscode-badge-foreground);
+  border-color: var(--vscode-panel-border);
+}
+
+/* Empty State */
+.empty-state {
+  @apply flex flex-col items-center justify-center min-h-[400px] p-8 text-center;
+}
+
+.empty-icon {
+  @apply w-16 h-16 mb-4;
+  color: var(--vscode-descriptionForeground);
+}
+
+.empty-title {
+  @apply text-xl font-semibold mb-2;
+  color: var(--vscode-foreground);
+}
+
+.empty-description {
+  @apply text-sm mb-4;
+  color: var(--vscode-descriptionForeground);
+}
+
+.empty-action-btn {
+  @apply px-4 py-2 rounded-lg font-medium transition-colors;
+  background: var(--vscode-button-background);
+  color: var(--vscode-button-foreground);
+}
+
+.empty-action-btn:hover {
+  background: var(--vscode-button-hoverBackground);
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  .routes-grid {
+    @apply grid-cols-1;
+  }
+}
+
+@media (min-width: 1024px) {
+  .routes-grid {
+    @apply grid-cols-2;
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--vscode-scrollbarSlider-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--vscode-scrollbarSlider-hoverBackground);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--vscode-scrollbarSlider-activeBackground);
 }

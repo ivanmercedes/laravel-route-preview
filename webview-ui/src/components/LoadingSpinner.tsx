@@ -1,4 +1,4 @@
-const LoadingSpiner = () => {
+const LoadingSpinner = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-[300px] p-8">
       <div className="flex flex-col items-center space-y-6">
@@ -32,4 +32,4 @@ const LoadingSpiner = () => {
   );
 };
 
-export default LoadingSpiner;
+export default LoadingSpinner;

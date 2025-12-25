@@ -3,11 +3,11 @@ import * as vscode from 'vscode';
 import { Disposable, Uri, ViewColumn, Webview, WebviewPanel, window } from "vscode";
 import { getNonce, getUri } from "../utilities";
 /**
- * This class manages the state and behavior of HelloWorld webview panels.
+ * This class manages the state and behavior of Laravel Route Preview webview panels.
  *
  * It contains all the data and methods for:
  *
- * - Creating and rendering HelloWorld webview panels
+ * - Creating and rendering Laravel Route Preview webview panels
  * - Properly cleaning up and disposing of webview resources when the panel is closed
  * - Setting the HTML (and by proxy CSS/JavaScript) content of the webview panel
  * - Setting message listeners so data can be passed between the webview and extension
@@ -115,7 +115,7 @@ export class LaravelRoutePreviewPanel {
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource}; script-src 'nonce-${nonce}';">
           <link rel="stylesheet" type="text/css" href="${stylesUri}">
-          <title>Hello World</title>
+          <title>Laravel Routes</title>
         </head>
         <body>
           <div id="root"></div>

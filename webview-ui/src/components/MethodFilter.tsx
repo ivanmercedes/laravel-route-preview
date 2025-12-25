@@ -11,8 +11,6 @@ const MethodFilter: React.FC<MethodFilterProps> = ({
   selectedMethods,
   onFilterChange,
 }) => {
-  console.log("selectedMethods", selectedMethods);
-  console.log("onFilterChange", onFilterChange);
   const handleMethodToggle = (method: string) => {
     const newSelectedMethods = selectedMethods.includes(method)
       ? selectedMethods.filter((m) => m !== method)
@@ -20,21 +18,68 @@ const MethodFilter: React.FC<MethodFilterProps> = ({
     onFilterChange(newSelectedMethods);
   };
 
+  const handleSelectAll = () => {
+    onFilterChange(AVAILABLE_METHODS);
+  };
+
+  const handleClearAll = () => {
+    onFilterChange([]);
+  };
+
   return (
-    <div className="flex flex-wrap gap-2">
-      {AVAILABLE_METHODS.map((method) => (
+    <div className="space-y-2">
+      <div className="flex flex-wrap gap-2">
+        {AVAILABLE_METHODS.map((method) => (
+          <button
+            key={method}
+            onClick={() => handleMethodToggle(method)}
+            className={`btn-method ${selectedMethods.includes(method)
+                ? "btn-method-active"
+                : "btn-method-inactive"
+              }`}
+            aria-pressed={selectedMethods.includes(method)}
+            aria-label={`Filter by ${method} method`}
+          >
+            {method}
+          </button>
+        ))}
+      </div>
+
+      <div className="flex gap-2">
         <button
-          key={method}
-          onClick={() => handleMethodToggle(method)}
-          className={`btn-method ${
-            selectedMethods.includes(method)
-              ? "btn-method-active"
-              : "btn-method-inactive"
-          }`}
+          onClick={handleSelectAll}
+          className="text-xs px-2 py-1 rounded-md transition-colors"
+          style={{
+            background: "var(--vscode-button-secondaryBackground)",
+            color: "var(--vscode-button-secondaryForeground)",
+          }}
+          aria-label="Select all methods"
         >
-          {method}
+          Select All
         </button>
-      ))}
+        <button
+          onClick={handleClearAll}
+          className="text-xs px-2 py-1 rounded-md transition-colors"
+          style={{
+            background: "var(--vscode-button-secondaryBackground)",
+            color: "var(--vscode-button-secondaryForeground)",
+          }}
+          aria-label="Clear all methods"
+        >
+          Clear All
+        </button>
+        {selectedMethods.length > 0 && (
+          <span
+            className="text-xs px-2 py-1 rounded-md"
+            style={{
+              background: "var(--vscode-badge-background)",
+              color: "var(--vscode-badge-foreground)",
+            }}
+          >
+            {selectedMethods.length} selected
+          </span>
+        )}
+      </div>
     </div>
   );
 };
